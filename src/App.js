@@ -13,27 +13,16 @@ import InfoScreen from './Screens/InfoScreen';
 import { useRef } from 'react';
 import useFetch from './hooks/useFetch'
 
-const override = css`
-  display: block;
-  margin: 0 auto;
-  border-color: red;
-`;
+
 
 function App() 
 {
 
-  const [isLoading,data] = useFetch('https://jsonplaceholder.typicode.com/posts','GET',5000)
-
-  console.log(`isLoading:${isLoading}`)
-  console.log(`data:${data}`)
-
+  
   return (
     <>
-     {isLoading ? 
-     <ClipLoader color={'#ffffff'} loading={true} css={override} size={150} /> :
-      data.map((el) => <li>{el.title}</li>)
-     }
-     <Child />
+    
+      <Child/>
     </>
   );
 }
