@@ -10,26 +10,30 @@ import ChildOfChild from './Components/ChildOfChild/ChildOfChild'
 import { BrowserRouter, Route, Switch,Redirect } from 'react-router-dom';
 import HomeScreen from './Screens/HomeScreen';
 import InfoScreen from './Screens/InfoScreen';
+import { useRef } from 'react';
+import useFetch from './hooks/useFetch'
 
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
-function App() {
+function App() 
+{
 
+  const [isLoading,data] = useFetch('https://jsonplaceholder.typicode.com/posts','GET',5000)
 
-  //npm i react-router-dom
-  //npm i react-roter@5.2.0
-
-  
+  console.log(`isLoading:${isLoading}`)
+  console.log(`data:${data}`)
 
   return (
-  <>
-       <BrowserRouter>  
-            <Switch>
-              <Route path="/" render={()=> <HomeScreen/>} exact/>
-              <Route path="/info/:id" render={()=> <InfoScreen/>} exact/> 
-              <Route path="*" render={()=> <Redirect to='/' />} />
-            </Switch>
-       </BrowserRouter> 
-
+    <>
+     {isLoading ? 
+     <ClipLoader color={'#ffffff'} loading={true} css={override} size={150} /> :
+      data.map((el) => <li>{el.title}</li>)
+     }
+     <Child />
     </>
   );
 }
